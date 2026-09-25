@@ -1,0 +1,274 @@
+<style>
+.trlok-hero {
+  background: var(--cream, #faf6f0);
+  padding: 72px var(--page-margin, 24px) 56px;
+  text-align: center;
+}
+.trlok-eyebrow {
+  font-family: var(--font-primary--family, 'DM Sans', sans-serif);
+  font-size: 0.78rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--brown-mid, #7c6a52);
+  margin-bottom: 14px;
+}
+.trlok-h1 {
+  font-family: var(--font-heading--family, 'Playfair Display', serif);
+  font-size: clamp(2rem, 4.5vw, 3rem);
+  color: var(--brown-dark, #2a2a1a);
+  margin: 0 0 20px;
+  line-height: 1.2;
+  max-width: 760px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.trlok-intro {
+  font-family: var(--font-primary--family, 'DM Sans', sans-serif);
+  font-size: 1.1rem;
+  color: var(--brown-mid, #5c4f3a);
+  line-height: 1.75;
+  max-width: 620px;
+  margin: 0 auto 36px;
+}
+.trlok-cta {
+  display: inline-block;
+  background: var(--green-dark, #3b5240);
+  color: #fff;
+  font-family: var(--font-primary--family, 'DM Sans', sans-serif);
+  font-weight: 600;
+  font-size: 0.95rem;
+  padding: 14px 28px;
+  border-radius: 4px;
+  text-decoration: none;
+  transition: background 0.2s;
+}
+.trlok-cta:hover { background: var(--green-mid, #2d3f32); }
+
+/* Info block */
+.trlok-info {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 56px var(--page-margin, 24px);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+}
+@media (max-width: 680px) {
+  .trlok-info { grid-template-columns: 1fr; gap: 32px; }
+}
+.trlok-card {
+  background: #fff;
+  border: 1px solid var(--cream-dark, #e0d5c5);
+  border-radius: 8px;
+  padding: 32px;
+}
+.trlok-card-title {
+  font-family: var(--font-heading--family, 'Playfair Display', serif);
+  font-size: 1.25rem;
+  color: var(--brown-dark, #2a2a1a);
+  margin: 0 0 16px;
+}
+.trlok-card p {
+  font-family: var(--font-primary--family, 'DM Sans', sans-serif);
+  font-size: 0.95rem;
+  color: var(--brown-mid, #5c4f3a);
+  line-height: 1.7;
+  margin: 0 0 10px;
+}
+.trlok-card p:last-child { margin-bottom: 0; }
+.trlok-card a { color: var(--green-dark, #3b5240); text-decoration: underline; }
+
+/* Content section */
+.trlok-content {
+  background: var(--cream, #faf6f0);
+  padding: 56px var(--page-margin, 24px);
+}
+.trlok-content-inner {
+  max-width: 720px;
+  margin: 0 auto;
+}
+.trlok-content h2 {
+  font-family: var(--font-heading--family, 'Playfair Display', serif);
+  font-size: clamp(1.4rem, 2.5vw, 1.9rem);
+  color: var(--brown-dark, #2a2a1a);
+  margin: 0 0 16px;
+}
+.trlok-content p {
+  font-family: var(--font-primary--family, 'DM Sans', sans-serif);
+  font-size: 0.98rem;
+  color: var(--brown-mid, #5c4f3a);
+  line-height: 1.8;
+  margin: 0 0 20px;
+}
+.trlok-content ul {
+  font-family: var(--font-primary--family, 'DM Sans', sans-serif);
+  font-size: 0.98rem;
+  color: var(--brown-mid, #5c4f3a);
+  line-height: 1.8;
+  margin: 0 0 20px;
+  padding-left: 20px;
+}
+.trlok-content a { color: var(--green-dark, #3b5240); text-decoration: underline; }
+
+/* Map CTA */
+.trlok-map {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 48px var(--page-margin, 24px) 64px;
+  text-align: center;
+}
+.trlok-map h2 {
+  font-family: var(--font-heading--family, 'Playfair Display', serif);
+  font-size: 1.6rem;
+  color: var(--brown-dark, #2a2a1a);
+  margin: 0 0 12px;
+}
+.trlok-map p {
+  font-family: var(--font-primary--family, 'DM Sans', sans-serif);
+  font-size: 0.98rem;
+  color: var(--brown-mid, #5c4f3a);
+  margin: 0 0 24px;
+  line-height: 1.7;
+}
+.trlok-map-btn {
+  display: inline-block;
+  border: 2px solid var(--green-dark, #3b5240);
+  color: var(--green-dark, #3b5240);
+  font-family: var(--font-primary--family, 'DM Sans', sans-serif);
+  font-weight: 600;
+  font-size: 0.95rem;
+  padding: 13px 26px;
+  border-radius: 4px;
+  text-decoration: none;
+  transition: all 0.2s;
+  margin: 0 8px 8px;
+}
+.trlok-map-btn:hover { background: var(--green-dark, #3b5240); color: #fff; }
+.trlok-map-btn.filled {
+  background: var(--green-dark, #3b5240);
+  color: #fff;
+}
+.trlok-map-btn.filled:hover { background: var(--green-mid, #2d3f32); }
+</style>
+
+<div class="trlok-hero">
+  <p class="trlok-eyebrow">Theewinkel in Borne, Twente</p>
+  <h1 class="trlok-h1">Losse thee kopen in Twente? Tante Rie zit in Borne</h1>
+  <p class="trlok-intro">Meer dan 130 theesoorten, vers verpakt. Je kunt ze online bestellen of langskomen in onze winkel aan de Bakkerssteeg in Borne. Persoonlijk advies inbegrepen.</p>
+  <a href="/collections/thee" class="trlok-cta">Bekijk het assortiment</a>
+</div>
+
+<div class="trlok-info">
+  <div class="trlok-card">
+    <h2 class="trlok-card-title">Bezoek de winkel</h2>
+    <p><strong>Adres</strong><br>Bakkerssteeg 6<br>7622 GX Borne</p>
+    <p><strong>Openingstijden</strong><br>
+      Maandag: gesloten<br>
+      Dinsdag t/m zaterdag: 10:00 – 17:00<br>
+      Zondag: gesloten
+    </p>
+    <p><strong>Telefoon</strong><br><a href="tel:+31638291189">06 38 29 11 89</a></p>
+    <p><strong>E-mail</strong><br><a href="mailto:webshop@tanterie.nl">webshop@tanterie.nl</a></p>
+  </div>
+  <div class="trlok-card">
+    <h2 class="trlok-card-title">Online bestellen</h2>
+    <p>Woon je niet in Borne? We versturen naar heel Nederland. Snel verzonden, vers verpakt vanuit de winkel.</p>
+    <p>
+      <a href="/collections/thee">Losse thee</a> &middot;
+      <a href="/collections/kruidenthee">Kruidenthee</a> &middot;
+      <a href="/collections/groene-thee">Groene thee</a> &middot;
+      <a href="/collections/zwarte-thee">Zwarte thee</a>
+    </p>
+  </div>
+</div>
+
+<div class="trlok-content">
+  <div class="trlok-content-inner">
+    <h2>Theespeciaalzaak in Twente</h2>
+    <p>Tante Rie opende in 2014 haar deuren in het centrum van Borne. Eigenaar Nikkie selecteert elk product met de hand: van <a href="/collections/groene-thee">Japanse Sencha</a> en <a href="/collections/zwarte-thee">Ceylon zwarte thee</a> tot <a href="/collections/kruidenthee">biologische kruidenthee</a> en seizoensgebonden blends.</p>
+    <p>In de winkel kun je thee ruiken, proeven en vragen stellen. Voor online bestellingen geldt hetzelfde advies via e-mail of telefoon. Twente heeft een echte theespeciaalzaak nodig. Tante Rie wil dat zijn.</p>
+
+    <h2>Wat vind je bij Tante Rie?</h2>
+    <ul>
+      <li>Meer dan 130 <a href="/collections/thee">losse theesoorten</a>, vers verpakt per bestelling</li>
+      <li><a href="/collections/servies">Bunzlau Castle servies</a> en theepotten</li>
+      <li><a href="/collections/theefilters-en-maatschepjes">Theefilters en accessoires</a></li>
+      <li>Cadeauverpakkingen en <a href="/collections/geven-is-leuker">theecadeaus</a></li>
+      <li>Persoonlijk advies bij elke aankoop</li>
+    </ul>
+
+    <h2>Bereikbaar vanuit heel Twente</h2>
+    <p>Borne ligt centraal in Twente, op vijf minuten rijden van Hengelo en twintig minuten van Enschede, Almelo en Oldenzaal. Gratis parkeren vlakbij de winkel aan de Bakkerssteeg.</p>
+    <p>Liever niet rijden? Borne heeft een eigen treinstation, vijf minuten lopen van de winkel.</p>
+  </div>
+</div>
+
+<div class="trlok-map">
+  <h2>Kom langs in Borne</h2>
+  <p>Bakkerssteeg 6, 7622 GX Borne &middot; Dinsdag t/m zaterdag open</p>
+  <a href="https://maps.google.com/?q=Bakkerssteeg+6,+7622+GX+Borne" target="_blank" rel="noopener" class="trlok-map-btn">Routebeschrijving</a>
+  <a href="/collections/thee" class="trlok-map-btn filled">Online bestellen</a>
+</div>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  "@id": "https://tanterie.nl/#organization",
+  "name": "Tante Rie",
+  "description": "Theespeciaalzaak in Borne, Twente. Meer dan 130 losse theesoorten, vers verpakt. Online bestellen of langskomen in de winkel.",
+  "url": "https://tanterie.nl",
+  "telephone": "+31638291189",
+  "email": "webshop@tanterie.nl",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "Bakkerssteeg 6",
+    "addressLocality": "Borne",
+    "postalCode": "7622 GX",
+    "addressRegion": "Overijssel",
+    "addressCountry": "NL"
+  },
+  "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": 52.2983,
+    "longitude": 6.7494
+  },
+  "openingHoursSpecification": [
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": ["Tuesday","Wednesday","Thursday","Friday","Saturday"],
+      "opens": "10:00",
+      "closes": "17:00"
+    }
+  ],
+  "priceRange": "€€",
+  "hasMap": "https://maps.google.com/?q=Bakkerssteeg+6,+7622+GX+Borne",
+  "sameAs": [
+    "https://www.facebook.com/TanteRieBorne",
+    "https://www.instagram.com/tante_rie_borne",
+    "https://www.tiktok.com/@tanterie",
+    "https://share.google/kbsIOsKgfL1KqvGB4"
+  ]
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://tanterie.nl/" },
+    { "@type": "ListItem", "position": 2, "name": {{ page_title | json }}, "item": {{ shop.url | append: page.url | json }} }
+  ]
+}
+</script>
+
+{% schema %}
+{
+  "name": "Lokale SEO Pagina",
+  "tag": "section",
+  "class": "section-wrapper",
+  "settings": [],
+  "presets": [{ "name": "Lokale SEO Pagina" }]
+}
+{% endschema %}

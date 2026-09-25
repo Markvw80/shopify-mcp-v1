@@ -1,0 +1,120 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "tr_homepage": {
+      "type": "tr-homepage-redesign",
+      "blocks": {
+        "col_groene": {
+          "type": "collection_card",
+          "settings": { "collection": "groene-thee", "title": "Groene Thee", "subtitle": "Fris, licht & vol antioxidanten" }
+        },
+        "col_zwarte": {
+          "type": "collection_card",
+          "settings": { "collection": "zwarte-thee", "title": "Zwarte Thee", "subtitle": "Vol, krachtig & aromatisch" }
+        },
+        "col_kruiden": {
+          "type": "collection_card",
+          "settings": { "collection": "kruidenthee", "title": "Kruidenthee", "subtitle": "Cafeïnevrij & rustgevend" }
+        },
+        "col_rooibos": {
+          "type": "collection_card",
+          "settings": { "collection": "rooibos", "title": "Rooibos", "subtitle": "Warm, zoet & cafeïnevrij" }
+        },
+        "col_witte": {
+          "type": "collection_card",
+          "settings": { "collection": "witte-thee", "title": "Witte Thee", "subtitle": "Delicaat, zacht & licht" }
+        },
+        "col_vruchten": {
+          "type": "collection_card",
+          "settings": { "collection": "vruchtenthee", "title": "Vruchtenthee", "subtitle": "Fruitig & cafeïnevrij" }
+        },
+        "col_ijsthee": {
+          "type": "collection_card",
+          "settings": { "collection": "ijsthee", "title": "IJsthee & Cold Brew", "subtitle": "Koud gezet, zacht van smaak" }
+        }
+      },
+      "block_order": [
+        "col_groene",
+        "col_zwarte",
+        "col_kruiden",
+        "col_rooibos",
+        "col_witte",
+        "col_vruchten",
+        "col_ijsthee"
+      ],
+      "settings": {
+        "hero_eyebrow": "Theespeciaalzaak Borne",
+        "hero_title": "Losse thee, vers verpakt in Borne",
+        "hero_sub": "Meer dan 130 zorgvuldig geselecteerde theesoorten.",
+        "hero_cta_primary_text": "Ontdek alle theesoorten",
+        "hero_cta_primary_url": "/collections/thee",
+        "hero_cta_secondary_text": "Ons verhaal",
+        "hero_cta_secondary_url": "/pages/over-ons",
+        "hide_hero_badge": false,
+        "hero_badge_collection": "thee",
+        "hero_badge_num": "130+",
+        "hero_badge_label": "theesoorten",
+        "usp_1": "Vers verpakt uit eigen winkel",
+        "usp_2": "Meer dan 130 theesoorten",
+        "usp_3": "Snel verzonden",
+        "usp_4": "4.9 / 5, geliefd bij theeliefhebbers",
+        "featured_collection": "thee",
+        "about_title": "Onze theewinkel in Borne, sinds 2014",
+        "about_text_1": "Tante Rie opende in 2014 haar deuren in het centrum van Borne. De winkel draagt de naam van Rie Badart, de moeder van de oprichtster: een vrouw die altijd met een kopje thee klaarzat als je binnenkwam.",
+        "about_text_2": "Eigenaar Nikkie selecteert elk product met de hand. Meer dan 130 soorten losse thee, van Japanse Sencha en Ceylon zwarte thee tot biologische kruidenthee en seizoensblends. Alles wordt per bestelling vers verpakt, niet maanden vooruit. Daarnaast vind je theepotten en servies van Bunzlau Castle, theeblikken, filters en samengestelde theecadeaus.",
+        "about_text_3": "In de winkel aan de Bakkerssteeg kun je thee ruiken, proeven en vragen stellen. Bestel je online, dan versturen we binnen 1 tot 2 werkdagen met PostNL of DHL naar heel Nederland. Borne ligt centraal in Twente, op vijf minuten rijden van Hengelo.",
+        "about_image": "shopify://shop_images/26_Tante-Rie_Algemeen_thee_LQ_JochemBoxemPhotography-12303_1.png",
+        "hero_image": "shopify://shop_images/38_Tante_Rie_winkel_thee_LQ_JochemBoxemPhotography-12508.webp",
+        "about_cta_text": "Ontdek ons assortiment",
+        "about_cta_url": "/collections/thee"
+      }
+    }
+    ,
+    "tr_homepage_blog": {
+      "type": "tr-homepage-blog",
+      "settings": {
+        "blog_title": "Uit ons blog",
+        "blog_sub": "Verhalen, tips en inspiratie uit de wereld van thee",
+        "blog_handle": "nieuws",
+        "blog_count": 3
+      }
+    }
+    ,
+    "tr_homepage_cta": {
+      "type": "tr-homepage-cta",
+      "settings": {}
+    }
+    ,
+    "tr_faq": {
+      "type": "tr-homepage-faq",
+      "settings": {}
+    }
+    ,
+    "tr_reviews": {
+      "type": "tr-reviews",
+      "settings": {
+        "label": "Klantbeoordelingen",
+        "title": "Waarom klanten voor Tante Rie kiezen",
+        "max_items": 6,
+        "min_rating": 4,
+        "min_length": 40,
+        "all_reviews_url": ""
+      }
+    }
+  },
+  "order": [
+    "tr_homepage",
+    "tr_reviews",
+    "tr_homepage_blog",
+    "tr_faq",
+    "tr_homepage_cta"
+  ]
+}

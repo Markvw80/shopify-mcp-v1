@@ -23,9 +23,12 @@ Theme-ID `202361864456`, een kopie van het live theme van 25-09. Publiceren moet
 | `sections/tr-collection-redesign.liquid` | Productgrid in `{% paginate collection.products by 48 %}`. Hiermee toont /collections/thee alle 134 theeën (3 pagina's) in plaats van 50. Geldt ook voor cadeaus en de andere collecties die dit template gebruiken. |
 | `sections/tr-collection-bunzlau.liquid` | Idem. Alle 79 Bunzlau-producten zijn nu bereikbaar (2 pagina's). |
 | `snippets/schema-structured-data.liquid` | Precies één Product- en BreadcrumbList-schema per productpagina. Rice, Joeff en Waterfles krijgen geen dubbel schema meer. Het standaard-, thee- en accessoire-template krijgen het volledige `tr-product-schema` (met verzending en retour). |
+| `templates/index.json` | Homepage "Over ons"-blok: "sinds 2024" / "opende in 2024" → **2014** |
+| `sections/tr-page-lokaal.liquid` | Lokale Borne-pagina: "opende in 2024" → **2014** |
+| `templates/llms.txt.liquid` | "opende in 2024" → **2014**; blog-links bijgewerkt naar de nieuwe handles (witte thee China, blogreeks) |
 | `snippets/tr-product-schema.liquid` | Bunzlau- en Blond-templates: `doesNotShip` + `OnSitePickup` + retour in de winkel, conform "alleen afhalen". |
 
-Geverifieerd: de MD5-checksums van alle geüploade bestanden komen overeen met de lokale versies, behalve `tr-collection-bunzlau.liquid`. Daar verschilt alleen het aantal decoratieve `─`-tekens in een paar commentaarregels; de code is identiek.
+Geverifieerd: de MD5-checksums (ook van de 2014-correctie) van alle geüploade bestanden komen overeen met de lokale versies, behalve `tr-collection-bunzlau.liquid`. Daar verschilt alleen het aantal decoratieve `─`-tekens in een paar commentaarregels; de code is identiek.
 
 **Test vóór publicatie (preview van het theme):**
 1. `/collections/thee`: onderaan staan paginalinks; pagina 2 en 3 tonen andere theeën; filters blijven werken.
@@ -40,7 +43,6 @@ Nog niet gedaan: de overige `tr-collection-*`-secties (groene thee 42, zwarte th
 - **SEO-titels en meta-descriptions voor ~52 producten**: bulkwijziging op live producten, geweigerd door de sessiepermissies.
 - **34 lege of kassa-achtige producten online** (bijv. `blikje-bij`, `thee-ei-kat`, `chocoladebal`, Sint/Halloween-items, "Tante Rie Cadeaubon" met beschrijving "x§x"): moeten die online staan?
 - **Kale gepubliceerde collecties** `kaartjes`, `glazen`, `return-to-sender` (bevat producten van €0,00), `dutch-tea-maestro`, `koffiekaravaan`, `tegels-anita`, `nfc-natural-flower-cards`: online houden (dan SEO-tekst schrijven) of depubliceren?
-- **"Sinds 2024" vs. 2014**: wat is het juiste openingsjaar? Staat in `templates/index.json`, `sections/tr-page-lokaal.liquid` en `templates/llms.txt.liquid`.
 - **`webshop.tanterie.nl`**: controleren in Instellingen → Domeinen (redirect naar het primaire domein).
 
 ## Correctie op het auditrapport
