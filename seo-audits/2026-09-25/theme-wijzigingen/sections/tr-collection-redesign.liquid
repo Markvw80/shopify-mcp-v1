@@ -1,0 +1,422 @@
+{% comment %} Tante Rie – Collection Page Redesign {% endcomment %}
+{% comment %}
+  Kaarttekst op collectiepagina gebruikt product.metafields.custom.samenvatting
+  als dat ingevuld is, anders valt het terug op een leeg veld.
+  De productbeschrijving (SEO-tekst) wordt NIET gebruikt op de kaart.
+{% endcomment %}
+
+<style>
+/* ─── Tante Rie huisstijl design tokens (generieke collectiepagina's) ────── */
+:root {
+  --trc-main:  #3B5240;
+  --trc-mid:   #5C7A67;
+  --trc-light: #E9EFEA;
+  --trc-dark:  #263830;
+}
+
+.trc-wrap *, .trc-wrap *::before, .trc-wrap *::after { box-sizing: border-box; margin: 0; padding: 0; }
+.trc-wrap { background: var(--cream); color: var(--text); font-family: 'DM Sans', sans-serif; font-size: 15px; line-height: 1.6; -webkit-font-smoothing: antialiased; min-height: 100vh; }
+
+/* ─── Hero ───────────────────────────────────────────────────────────────── */
+.trc-hero { position: relative; background: var(--trc-dark); overflow: hidden; }
+.trc-hero-bg { position: absolute; inset: 0; background: linear-gradient(135deg, var(--trc-dark) 0%, var(--trc-main) 60%, var(--trc-mid) 100%); }
+.trc-hero-pattern { position: absolute; inset: 0; opacity: .08; background-image: radial-gradient(circle at 25% 40%, #fff 1.5px, transparent 1.5px), radial-gradient(circle at 75% 20%, #fff 1px, transparent 1px), radial-gradient(circle at 55% 75%, #fff 2px, transparent 2px); background-size: 52px 52px, 80px 80px, 64px 64px; }
+.trc-hero-img { position: absolute; inset: 0; }
+.trc-hero-img img { width: 100%; height: 100%; object-fit: cover; opacity: .22; }
+.trc-hero-inner { position: relative; z-index: 1; padding: 52px var(--page-margin) 48px; max-width: 760px; }
+.trc-breadcrumb { font-size: 12px; color: rgba(255,255,255,.6); letter-spacing: .04em; margin-bottom: 18px; }
+.trc-breadcrumb a { color: rgba(255,255,255,.6); text-decoration: none; }
+.trc-breadcrumb a:hover { color: #fff; }
+.trc-breadcrumb span { margin: 0 6px; }
+.trc-hero-label { display: inline-flex; align-items: center; gap: 8px; background: rgba(255,255,255,.15); border: 1px solid rgba(255,255,255,.25); border-radius: 50px; padding: 5px 14px; font-size: 11px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: rgba(255,255,255,.9); margin-bottom: 18px; }
+.trc-title { font-family: 'Playfair Display', serif; font-size: clamp(2rem, 4vw, 3rem); font-weight: 400; color: #fff; line-height: 1.15; margin-bottom: 14px; }
+.trc-subtitle { font-family: 'DM Sans', sans-serif; font-style: italic; font-size: 1rem; color: rgba(255,255,255,.8); margin-bottom: 28px; line-height: 1.6; max-width: 560px; }
+.trc-hero-meta { display: flex; align-items: center; gap: 20px; flex-wrap: wrap; }
+.trc-count { font-size: 13px; color: rgba(255,255,255,.65); white-space: nowrap; flex-shrink: 0; }
+.trc-hero-loc { display: inline-flex; align-items: center; gap: 6px; background: rgba(255,255,255,.12); border-radius: 50px; padding: 5px 14px; font-size: 12px; color: rgba(255,255,255,.85); }
+.trc-header-desc { font-size: .9rem; color: var(--text-muted); line-height: 1.75; padding: 24px var(--page-margin) 0; max-width: 760px; }
+.trc-header-desc p { margin: 0; }
+.trc-header-desc strong, .trc-header-desc b { color: var(--brown-dark); font-weight: 600; }
+.trc-header-desc a { color: var(--brown); text-decoration: underline; text-underline-offset: 2px; }
+
+/* ─── USP bar ────────────────────────────────────────────────────────────── */
+.trc-usp-bar { background: var(--trc-light); border-bottom: 1px solid rgba(59,82,64,.15); position: sticky; top: var(--header-group-height, 64px); transition: top var(--animation-speed-slow, .3s) var(--ease-out-cubic, ease); z-index: 7; }
+.trc-usp-inner { display: flex; align-items: stretch; justify-content: center; flex-wrap: wrap; gap: 0; }
+.trc-usp-item { display: flex; align-items: center; gap: 10px; padding: 16px 32px; border-right: 1px solid rgba(59,82,64,.15); flex: 1; min-width: 200px; font-size: 13px; font-weight: 500; color: var(--trc-dark); }
+.trc-usp-item:last-child { border-right: none; }
+.trc-usp-item svg { width: 16px; height: 16px; stroke: var(--trc-main); fill: none; stroke-width: 2; flex-shrink: 0; }
+@media (max-width: 700px) { .trc-usp-bar .trc-usp-inner { flex-direction: column; } .trc-usp-item { border-right: none; border-bottom: 1px solid rgba(59,82,64,.15); padding: 12px 20px; justify-content: center; text-align: center; } .trc-usp-item:last-child { border-bottom: none; } }
+.trc-grid-wrap { padding: 36px var(--page-margin) 64px; position: relative; z-index: 0; }
+.trc-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+.trc-card { background: var(--white); border-radius: 18px; overflow: hidden; border: 1px solid var(--cream-dark); display: flex; flex-direction: column; text-decoration: none; color: inherit; transition: transform .22s ease, box-shadow .22s ease; animation: trcFadeUp .45s ease both; }
+.trc-card:hover { transform: translateY(-5px); box-shadow: 0 16px 40px rgba(74,50,34,.1); }
+.trc-card:nth-child(1) { animation-delay: .04s; }
+.trc-card:nth-child(2) { animation-delay: .08s; }
+.trc-card:nth-child(3) { animation-delay: .12s; }
+.trc-card:nth-child(4) { animation-delay: .16s; }
+.trc-card:nth-child(5) { animation-delay: .20s; }
+.trc-card:nth-child(6) { animation-delay: .24s; }
+.trc-card:nth-child(7) { animation-delay: .28s; }
+.trc-card:nth-child(8) { animation-delay: .32s; }
+.trc-card:nth-child(n+9) { animation-delay: .36s; }
+@keyframes trcFadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: none; } }
+.trc-card-img { aspect-ratio: 1; overflow: hidden; background: var(--page-bg); position: relative; display: block; }
+.trc-card-img img { width: 100%; height: 100%; object-fit: contain; padding: 16px; transition: transform .4s ease; display: block; }
+.trc-card:hover .trc-card-img img { transform: scale(1.05); }
+.trc-sold-out-badge { position: absolute; top: 12px; left: 12px; background: rgba(74,50,34,.75); color: #fff; font-size: 10px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; padding: 4px 10px; border-radius: 50px; }
+.trc-card.trc-sold-out { opacity: .7; }
+.trc-card.trc-sold-out .trc-atc-btn { background: var(--cream-dark); color: var(--text-muted); cursor: not-allowed; }
+.trc-card-body { padding: 16px 16px 18px; flex: 1; display: flex; flex-direction: column; gap: 4px; }
+.trc-card-type { font-size: 10px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--trc-main); }
+.trc-card-name { font-family: 'DM Sans', sans-serif; font-size: 1rem; font-weight: 600; color: var(--brown-dark); line-height: 1.3; }
+.trc-card-desc { font-size: 12px; color: var(--text-muted); line-height: 1.55; margin-top: 4px; flex: 1; }
+.trc-card-flavors { font-family: 'DM Sans', sans-serif; font-style: italic; font-size: 12.5px; color: var(--text-muted); line-height: 1.55; margin-top: 4px; flex: 1; }
+.trc-card-footer { display: flex; align-items: center; justify-content: space-between; margin-top: 14px; gap: 8px; }
+.trc-card-price { font-family: 'Playfair Display', serif; font-size: 1.4rem; color: var(--brown-dark); font-weight: 400; }
+.trc-atc-btn { background: var(--brown-dark); color: var(--white); border: none; border-radius: 50px; padding: 8px 16px; font-family: 'DM Sans', sans-serif; font-size: 11px; font-weight: 500; letter-spacing: .06em; text-transform: uppercase; cursor: pointer; transition: background .2s, transform .15s; white-space: nowrap; }
+.trc-atc-btn:hover:not(:disabled) { background: var(--brown); transform: translateY(-1px); }
+.trc-atc-btn.tr-atc-added { background: var(--green); }
+.trc-card.trc-sold-out .trc-atc-btn { background: var(--cream-dark); color: var(--text-muted); cursor: not-allowed; }
+.trc-empty { text-align: center; padding: 80px var(--page-margin); color: var(--text-muted); }
+.trc-empty p { font-family: 'DM Sans', sans-serif; font-style: italic; font-size: 1.1rem; }
+.trc-seo-desc { padding: 48px var(--page-margin) 64px; background: var(--cream); border-top: 1px solid var(--cream-dark); }
+.trc-seo-inner { max-width: 100%; }
+.trc-header-desc h1, .trc-header-desc h2 { display: none; }
+.trc-seo-inner h1, .trc-seo-inner h2, .trc-seo-inner h3 { font-family: 'Playfair Display', serif; font-weight: 400; color: var(--brown-dark); margin: 28px 0 10px; font-size: 1.35rem; line-height: 1.2; }
+.trc-seo-inner h1:first-child, .trc-seo-inner h2:first-child, .trc-seo-inner h3:first-child { margin-top: 0; }
+.trc-seo-inner p { font-size: .9rem; color: var(--text-muted); line-height: 1.8; margin-bottom: 14px; }
+.trc-seo-inner a { color: var(--brown); text-decoration: underline; text-underline-offset: 2px; }
+.trc-seo-inner strong, .trc-seo-inner b { color: var(--brown-dark); font-weight: 600; }
+@media (max-width: 1100px) { .trc-grid { grid-template-columns: repeat(3, 1fr); } }
+@media (max-width: 700px) { .trc-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; } .trc-grid-wrap { padding: 24px 4vw 48px; } .trc-hero-inner { padding: 36px 4vw 32px; } .trc-usp-bar .trc-usp-inner { flex-direction: column; } }
+@media (max-width: 400px) { .trc-grid { grid-template-columns: 1fr; } }
+.trc-card-compare { font-size: .8rem; color: var(--text-muted); text-decoration: line-through; font-family: 'DM Sans', sans-serif; margin-left: 5px; font-style: normal; font-weight: 400; }
+.trc-card-tags { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 6px; }
+.trc-tag { display: inline-block; font-size: 9.5px; font-weight: 600; letter-spacing: .07em; text-transform: uppercase; padding: 2px 7px; border-radius: 50px; background: var(--trc-light); color: var(--trc-main); border: 1px solid rgba(59,82,64,.15); }
+.trc-filter-toolbar { display: flex; flex-direction: row; justify-content: space-between; align-items: center; padding: 16px var(--page-margin) 0; border-bottom: 1px solid var(--cream-dark); margin-bottom: 28px; flex-wrap: wrap; gap: 10px; }
+.trc-filter-groups { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+.trc-filter-pill-wrap { position: relative; }
+.trc-filter-pill { border: 1.5px solid var(--cream-dark); border-radius: 50px; padding: 8px 16px; font-size: 13px; background: var(--white); cursor: pointer; display: flex; gap: 6px; align-items: center; font-family: 'DM Sans', sans-serif; color: var(--brown-dark); }
+.trc-filter-pill.trc-filter-pill--active { border-color: var(--trc-main); background: var(--trc-main); color: var(--white); }
+.trc-filter-pill svg { transition: transform .2s; }
+.trc-filter-pill[aria-expanded="true"] svg { transform: rotate(180deg); }
+.trc-filter-dropdown { display: none; position: absolute; background: var(--white); border: 1px solid var(--cream-dark); border-radius: 14px; padding: 16px; min-width: 200px; z-index: 20; box-shadow: 0 8px 24px rgba(0,0,0,.1); top: calc(100% + 8px); left: 0; }
+.trc-filter-dropdown.trc-filter-dropdown--open { display: block; }
+.trc-filter-option { display: flex; gap: 8px; align-items: center; font-size: 13px; padding: 6px 0; cursor: pointer; font-family: 'DM Sans', sans-serif; color: var(--brown-dark); }
+.trc-filter-option input { cursor: pointer; accent-color: var(--brown-dark); }
+.trc-filter-active-strip { display: flex; flex-wrap: wrap; gap: 8px; padding: 12px var(--page-margin) 0; }
+.trc-filter-chip { background: var(--trc-light); border-radius: 50px; padding: 4px 12px; font-size: 12px; display: flex; gap: 6px; align-items: center; text-decoration: none; color: var(--trc-dark); font-family: 'DM Sans', sans-serif; }
+.trc-filter-sort { border: 1.5px solid var(--cream-dark); border-radius: 50px; padding: 8px 16px; font-size: 13px; background: var(--white); cursor: pointer; color: var(--brown-dark); font-family: 'DM Sans', sans-serif; appearance: none; -webkit-appearance: none; }
+.trc-filter-overlay { display: none; position: fixed; inset: 0; z-index: 10; }
+.trc-filter-overlay--open { display: block; }
+</style>
+
+<div class="trc-wrap">
+  {%- if collection.description != blank -%}
+    {%- assign _desc_parts = collection.description | split: '</p>' -%}
+    {%- assign _desc_first = _desc_parts[0] | append: '</p>' -%}
+    {%- assign _desc_rest = '' -%}
+    {%- for _p in _desc_parts offset: 1 -%}
+      {%- if _p != '' -%}{%- assign _desc_rest = _desc_rest | append: _p | append: '</p>' -%}{%- endif -%}
+    {%- endfor -%}
+  {%- endif -%}
+  <!-- ── Hero ─────────────────────────────────────────────────────────── -->
+  <section class="trc-hero" aria-label="{{ collection.title }} collectie">
+    <div class="trc-hero-bg"></div>
+    <div class="trc-hero-pattern"></div>
+    {%- assign _hero_img = collection.image -%}
+    {%- if _hero_img == blank and section.settings.hero_image != blank -%}
+      {%- assign _hero_img = section.settings.hero_image -%}
+    {%- endif -%}
+    {%- if _hero_img -%}
+      <div class="trc-hero-img">
+        <img src="{{ _hero_img | image_url: width: 1600 }}" alt="{{ _hero_img.alt | default: collection.title | escape }}" loading="eager" width="1600" height="600">
+      </div>
+    {%- endif -%}
+    <div class="trc-hero-inner">
+      <nav class="trc-breadcrumb" aria-label="Kruimelpad">
+        <a href="/">Home</a><span aria-hidden="true">›</span>
+        <a href="/collections">Collecties</a><span aria-hidden="true">›</span>
+        <span>{{ collection.title }}</span>
+      </nav>
+      <div class="trc-hero-label" aria-hidden="true">
+        {%- comment -%}
+          Was: {{ ... | default: '{%- render ... -%}' }}. De geneste enkele
+          quotes braken de string af, waardoor het hele bestand een Liquid
+          syntax error gaf en niet naar Shopify uploadde. Bovendien voert
+          Liquid geen tags uit binnen een string, dus de render werkte sowieso
+          niet. Nu als echte conditie.
+        {%- endcomment -%}
+        <span>
+          {%- if section.settings.hero_badge_icon != blank -%}
+            {{ section.settings.hero_badge_icon }}
+          {%- else -%}
+            {%- render 'tr-icon', name: 'tea-cup' -%}
+          {%- endif -%}
+        </span> {{ section.settings.hero_badge_text | default: 'Tante Rie' }}
+      </div>
+      <h1 class="trc-title" itemprop="headline">{{ collection.title }}</h1>
+      {%- if section.settings.subtitle != blank -%}
+        <p class="trc-subtitle">{{ section.settings.subtitle }}</p>
+      {%- elsif collection.description == blank -%}
+        <p class="trc-subtitle">Ontdek onze selectie &mdash; met zorg samengesteld bij Tante Rie</p>
+      {%- endif -%}
+      <div class="trc-hero-meta">
+        <span class="trc-count">
+          {%- assign _filters_active = false -%}
+          {%- for _f in collection.filters -%}
+            {%- for _fv in _f.values -%}
+              {%- if _fv.active -%}{%- assign _filters_active = true -%}{%- endif -%}
+            {%- endfor -%}
+          {%- endfor -%}
+          {%- if _filters_active -%}
+            {{ collection.products.size }} van {{ collection.products_count }} producten
+          {%- else -%}
+            {{ collection.products_count }} producten
+          {%- endif -%}
+        </span>
+        <span class="trc-hero-loc"><span aria-hidden="true">{%- render 'tr-icon', name: 'pin' -%}</span> Bakkerssteeg 6, Borne</span>
+      </div>
+    </div>
+  </section>
+
+  {%- if collection.description != blank and section.settings.subtitle == blank -%}
+    <div class="trc-header-desc">{{ _desc_first }}</div>
+  {%- endif -%}
+
+  <!-- ── USP balk ─────────────────────────────────────────────────────── -->
+  <div class="trc-usp-bar" role="complementary" aria-label="Belangrijke informatie">
+    <div class="trc-usp-inner">
+      <div class="trc-usp-item"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>{{ section.settings.usp_1 }}</div>
+      <div class="trc-usp-item"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>{{ section.settings.usp_2 }}</div>
+      <div class="trc-usp-item"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>{{ section.settings.usp_3 }}</div>
+    </div>
+  </div>
+
+  <div id="trc-filter-overlay" class="trc-filter-overlay"></div>
+
+  <form id="trc-filter-form" action="{{ collection.url }}" method="get">
+    <input type="hidden" name="sort_by" value="{{ collection.sort_by | default: collection.default_sort_by }}">
+    <div class="trc-filter-toolbar">
+      <div class="trc-filter-groups">
+        {%- if collection.filters.size > 0 -%}
+          {%- for filter in collection.filters -%}
+            {%- assign filter_has_active = false -%}
+            {%- for filter_value in filter.values -%}
+              {%- if filter_value.active -%}{%- assign filter_has_active = true -%}{%- endif -%}
+            {%- endfor -%}
+            <div class="trc-filter-pill-wrap">
+              <button type="button" class="trc-filter-pill{% if filter_has_active %} trc-filter-pill--active{% endif %}" aria-expanded="false" data-trc-filter-pill>
+                {{ filter.label }}
+                <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </button>
+              <div class="trc-filter-dropdown" data-trc-filter-dropdown>
+                {%- for filter_value in filter.values -%}
+                  <label class="trc-filter-option">
+                    <input type="checkbox" name="{{ filter.param_name }}" value="{{ filter_value.value }}"{% if filter_value.active %} checked{% endif %}>
+                    {{ filter_value.label }}
+                    {%- if filter_value.count != blank -%}<span style="color:var(--text-muted);font-size:11px">({{ filter_value.count }})</span>{%- endif -%}
+                  </label>
+                {%- endfor -%}
+              </div>
+            </div>
+          {%- endfor -%}
+        {%- endif -%}
+      </div>
+      <div>
+        <select class="trc-filter-sort" name="sort_by" aria-label="Sorteren" data-trc-sort>
+          {%- assign current_sort = collection.sort_by | default: collection.default_sort_by -%}
+          <option value="created-descending"{% if current_sort == 'created-descending' %} selected{% endif %}>Nieuwste eerst</option>
+          <option value="price-ascending"{% if current_sort == 'price-ascending' %} selected{% endif %}>Prijs: laag → hoog</option>
+          <option value="price-descending"{% if current_sort == 'price-descending' %} selected{% endif %}>Prijs: hoog → laag</option>
+          <option value="title-ascending"{% if current_sort == 'title-ascending' %} selected{% endif %}>Naam: A → Z</option>
+          <option value="title-descending"{% if current_sort == 'title-descending' %} selected{% endif %}>Naam: Z → A</option>
+        </select>
+      </div>
+    </div>
+    {%- assign _any_active = false -%}
+    {%- for filter in collection.filters -%}
+      {%- for filter_value in filter.values -%}
+        {%- if filter_value.active -%}{%- assign _any_active = true -%}{%- endif -%}
+      {%- endfor -%}
+    {%- endfor -%}
+    {%- if _any_active -%}
+      <div class="trc-filter-active-strip">
+        {%- for filter in collection.filters -%}
+          {%- for filter_value in filter.values -%}
+            {%- if filter_value.active -%}
+              <a href="{{ filter_value.url_to_remove }}" class="trc-filter-chip">{{ filter_value.label }} <span aria-hidden="true">×</span></a>
+            {%- endif -%}
+          {%- endfor -%}
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+  </form>
+
+  <div class="trc-grid-wrap">
+    {%- comment -%} SEO-audit 2026-09-25: paginate, anders rendert Shopify max. 50 producten {%- endcomment -%}
+    {%- paginate collection.products by 48 -%}
+    {%- if collection.products.size > 0 -%}
+      <div class="trc-grid">
+        {%- for product in collection.products -%}
+          {%- comment %}
+            Kaarttekst: gebruik het metaveld custom.samenvatting als dat bestaat,
+            anders toon geen beschrijving op de kaart.
+            De productbeschrijving zelf wordt hier NIET gebruikt.
+          {%- endcomment -%}
+          {%- assign kaart_tekst = product.metafields.custom.samenvatting -%}
+          {%- assign sold_out = false -%}
+          {%- unless product.available -%}{%- assign sold_out = true -%}{%- endunless -%}
+          <div class="trc-card{% if sold_out %} trc-sold-out{% endif %}">
+            <a href="{{ product.url }}" class="trc-card-img">
+              {%- if product.featured_image -%}
+                <img src="{{ product.featured_image | image_url: width: 500 }}" alt="{{ product.featured_image.alt | escape }}" loading="lazy" width="500" height="500">
+              {%- else -%}
+                <div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:2rem;opacity:.3" aria-hidden="true">{%- render 'tr-icon', name: 'tea-cup', size: 32 -%}</div>
+              {%- endif -%}
+              {%- if sold_out -%}<span class="trc-sold-out-badge">Uitverkocht</span>{%- endif -%}
+            </a>
+            <div class="trc-card-body">
+              {%- if product.type != blank -%}<span class="trc-card-type">{{ product.type }}</span>{%- endif -%}
+              <a href="{{ product.url }}" style="text-decoration:none;"><p class="trc-card-name">{{ product.title }}</p></a>
+              {%- if product.metafields.custom.smaakprofiel != blank -%}
+                <p class="trc-card-flavors">{{ product.metafields.custom.smaakprofiel }}</p>
+              {%- elsif kaart_tekst != blank -%}
+                <p class="trc-card-desc">{{ kaart_tekst }}</p>
+              {%- endif -%}
+              {%- assign trc_trust_tags = '' -%}
+              {%- for tag in product.tags -%}
+                {%- assign tag_lower = tag | downcase -%}
+                {%- if tag_lower == 'biologisch' or tag_lower == 'organic' -%}{%- assign trc_trust_tags = trc_trust_tags | append: 'Biologisch|' -%}
+                {%- elsif tag_lower == 'fairtrade' or tag_lower == 'fair trade' -%}{%- assign trc_trust_tags = trc_trust_tags | append: 'Fairtrade|' -%}
+                {%- elsif tag_lower == 'demeter' -%}{%- assign trc_trust_tags = trc_trust_tags | append: 'Demeter|' -%}
+                {%- elsif tag_lower == 'rainforest alliance' or tag_lower == 'rainforest-alliance' -%}{%- assign trc_trust_tags = trc_trust_tags | append: 'Rainforest|' -%}
+                {%- elsif tag_lower == 'eko' -%}{%- assign trc_trust_tags = trc_trust_tags | append: 'EKO|' -%}
+                {%- elsif tag_lower == 'vegan' -%}{%- assign trc_trust_tags = trc_trust_tags | append: 'Vegan|' -%}
+                {%- elsif tag_lower == 'glutenvrij' or tag_lower == 'gluten free' or tag_lower == 'gluten-free' -%}{%- assign trc_trust_tags = trc_trust_tags | append: 'Glutenvrij|' -%}
+                {%- endif -%}
+              {%- endfor -%}
+              {%- assign trc_trust_tags = trc_trust_tags | split: '|' | uniq -%}
+              {%- if trc_trust_tags.size > 0 -%}
+                <div class="trc-card-tags">
+                  {%- for t in trc_trust_tags -%}
+                    {%- if t != '' -%}<span class="trc-tag">{{ t }}</span>{%- endif -%}
+                  {%- endfor -%}
+                </div>
+              {%- endif -%}
+              <div class="trc-card-footer">
+                <span class="trc-card-price">
+                  {{ product.price | money }}
+                  {%- if product.compare_at_price > product.price -%}
+                    <span class="trc-card-compare">{{ product.compare_at_price | money }}</span>
+                  {%- endif -%}
+                </span>
+                {%- if sold_out -%}
+                  <button class="trc-atc-btn" disabled>Uitverkocht</button>
+                {%- else -%}
+                  <button class="trc-atc-btn" data-tr-atc data-success-text="✓ Toegevoegd" data-variant-id="{{ product.selected_or_first_available_variant.id }}">In winkelwagen</button>
+                {%- endif -%}
+              </div>
+            </div>
+          </div>
+        {%- endfor -%}
+      </div>
+    {%- else -%}
+      <div class="trc-empty"><p>Er zijn momenteel geen producten in deze collectie.</p></div>
+    {%- endif -%}
+    {%- render 'tr-pagination', paginate: paginate -%}
+    {%- endpaginate -%}
+  </div>
+
+  <script>
+  (function() {
+    var form = document.getElementById('trc-filter-form');
+    if (!form) return;
+
+    var overlay = document.getElementById('trc-filter-overlay');
+    var pills = form.querySelectorAll('[data-trc-filter-pill]');
+    var dropdowns = form.querySelectorAll('[data-trc-filter-dropdown]');
+    var sortSelect = form.querySelector('[data-trc-sort]');
+
+    function closeAll() {
+      pills.forEach(function(p) { p.setAttribute('aria-expanded', 'false'); });
+      dropdowns.forEach(function(d) { d.classList.remove('trc-filter-dropdown--open'); });
+      if (overlay) overlay.classList.remove('trc-filter-overlay--open');
+    }
+
+    pills.forEach(function(pill, i) {
+      pill.addEventListener('click', function() {
+        var isOpen = pill.getAttribute('aria-expanded') === 'true';
+        closeAll();
+        if (!isOpen) {
+          pill.setAttribute('aria-expanded', 'true');
+          dropdowns[i].classList.add('trc-filter-dropdown--open');
+          if (overlay) overlay.classList.add('trc-filter-overlay--open');
+        }
+      });
+    });
+
+    if (overlay) {
+      overlay.addEventListener('click', closeAll);
+    }
+
+    form.querySelectorAll('input[type="checkbox"]').forEach(function(cb) {
+      cb.addEventListener('change', function() { form.submit(); });
+    });
+
+    if (sortSelect) {
+      sortSelect.addEventListener('change', function() {
+        var hiddenSort = form.querySelector('input[name="sort_by"]');
+        if (hiddenSort) hiddenSort.remove();
+        form.submit();
+      });
+    }
+  })();
+  </script>
+
+  {%- if _desc_rest != '' -%}
+    <div class="trc-seo-desc">
+      <div class="trc-seo-inner">
+        {{ _desc_rest }}
+      </div>
+    </div>
+  {%- endif -%}
+
+  <!-- ── JSON-LD CollectionPage + BreadcrumbList ─────────────────────── -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "@id": {{ shop.url | append: collection.url | json }},
+    "name": {{ collection.title | json }},
+    "description": {{ collection.description | strip_html | truncate: 200 | json }},
+    "url": {{ shop.url | append: collection.url | json }},
+    "isPartOf": {
+      "@type": "WebSite",
+      "name": "Tante Rie",
+      "url": "https://tanterie.nl"
+    },
+    "numberOfItems": {{ collection.products_count }}
+  }
+  </script>
+</div>
+
+{% schema %}
+{
+  "name": "TR Collection Redesign",
+  "tag": "div",
+  "settings": [
+    { "type": "header", "content": "Hero" },
+    { "type": "text", "id": "hero_badge_icon", "label": "Hero-badge icoon (emoji)", "default": "{%- render 'tr-icon', name: 'tea-cup' -%}" },
+    { "type": "text", "id": "hero_badge_text", "label": "Hero-badge tekst", "default": "Tante Rie" },
+    { "type": "text", "id": "subtitle", "label": "Ondertitel header", "placeholder": "Laat leeg voor collectiebeschrijving" },
+    { "type": "image_picker", "id": "hero_image", "label": "Hero-achtergrondafbeelding", "info": "Optioneel, valt terug op collectie-afbeelding als leeg" },
+    { "type": "header", "content": "USP-balk" },
+    { "type": "text", "id": "usp_1", "label": "USP 1", "default": "Vers verpakt uit eigen winkel" },
+    { "type": "text", "id": "usp_2", "label": "USP 2", "default": "Meer dan 130 theesoorten" },
+    { "type": "text", "id": "usp_3", "label": "USP 3", "default": "Snel verzonden" },
+    { "type": "header", "content": "Productkaarten" },
+    { "type": "paragraph", "content": "De kaarttekst wordt opgehaald uit het productmetaveld 'custom.samenvatting'. Vul dit in via Shopify Admin → Producten → product → Metavelden. De productbeschrijving (SEO) wordt hier niet gebruikt." }
+  ]
+}
+{% endschema %}

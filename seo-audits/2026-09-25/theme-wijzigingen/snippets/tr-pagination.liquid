@@ -1,0 +1,38 @@
+{%- doc -%}
+  Crawlbare paginering voor de tr-collection-* secties.
+  Gewone <a href>-links (geen JS nodig), zodat zoekmachines alle productpagina's vinden.
+  paginate.*.url behoudt actieve filters en sortering.
+
+  @param {object} paginate - Het paginate-object uit de paginate-tag.
+{%- enddoc -%}
+
+{%- if paginate.pages > 1 -%}
+  <style>
+    .tr-pagination{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:.5rem;margin:2.5rem auto 1rem;padding:0;list-style:none;font-family:'DM Sans',sans-serif}
+    .tr-pagination a,.tr-pagination span{display:inline-flex;align-items:center;justify-content:center;min-width:44px;height:44px;padding:0 .75rem;border-radius:22px;border:1px solid var(--green-dark,#3b5240);color:var(--green-dark,#3b5240);text-decoration:none;font-size:.95rem}
+    .tr-pagination a:hover{background:var(--green-dark,#3b5240);color:#fff}
+    .tr-pagination [aria-current="page"]{background:var(--green-dark,#3b5240);color:#fff}
+    .tr-pagination .tr-pagination-gap{border:none;min-width:auto;padding:0 .25rem}
+  </style>
+  <nav aria-label="Paginering">
+    <ul class="tr-pagination">
+      {%- if paginate.previous -%}
+        <li><a href="{{ paginate.previous.url }}" rel="prev" aria-label="Vorige pagina">&larr; Vorige</a></li>
+      {%- endif -%}
+      {%- for part in paginate.parts -%}
+        <li>
+          {%- if part.is_link -%}
+            <a href="{{ part.url }}" aria-label="Pagina {{ part.title }}">{{ part.title }}</a>
+          {%- elsif part.title contains 'hellip' or part.title contains '…' -%}
+            <span class="tr-pagination-gap">{{ part.title }}</span>
+          {%- else -%}
+            <span aria-current="page">{{ part.title }}</span>
+          {%- endif -%}
+        </li>
+      {%- endfor -%}
+      {%- if paginate.next -%}
+        <li><a href="{{ paginate.next.url }}" rel="next" aria-label="Volgende pagina">Volgende &rarr;</a></li>
+      {%- endif -%}
+    </ul>
+  </nav>
+{%- endif -%}

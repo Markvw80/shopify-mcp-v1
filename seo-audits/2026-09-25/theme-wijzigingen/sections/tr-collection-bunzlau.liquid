@@ -1,0 +1,653 @@
+{% comment %} Tante Rie – Bunzlau Castle Collectie Landingspagina {% endcomment %}
+
+<style>
+/* ─── Bunzlau design tokens ─────────────────────────────────────────────── */
+:root {
+  --bz-blue:        #2C5F8A;
+  --bz-blue-mid:    #4A7BAF;
+  --bz-blue-light:  #E8F1F8;
+  --bz-blue-dark:   #1A3D5C;
+}
+
+/* ─── Wrapper ────────────────────────────────────────────────────────────── */
+.trbz-wrap *, .trbz-wrap *::before, .trbz-wrap *::after { box-sizing: border-box; margin: 0; padding: 0; }
+.trbz-wrap { background: var(--cream); color: var(--text); font-family: 'DM Sans', sans-serif; font-size: 15px; line-height: 1.6; -webkit-font-smoothing: antialiased; min-height: 100vh; }
+
+/* ─── Hero ───────────────────────────────────────────────────────────────── */
+.trbz-hero { position: relative; background: var(--bz-blue-dark); overflow: hidden; }
+.trbz-hero-bg { position: absolute; inset: 0; background: linear-gradient(135deg, var(--bz-blue-dark) 0%, var(--bz-blue) 60%, var(--bz-blue-mid) 100%); }
+.trbz-hero-pattern { position: absolute; inset: 0; opacity: .07; background-image: radial-gradient(circle at 20% 50%, #fff 1px, transparent 1px), radial-gradient(circle at 80% 20%, #fff 1px, transparent 1px), radial-gradient(circle at 60% 80%, #fff 1px, transparent 1px); background-size: 48px 48px, 72px 72px, 60px 60px; }
+.trbz-hero-img { position: absolute; inset: 0; }
+.trbz-hero-img img { width: 100%; height: 100%; object-fit: cover; opacity: .25; }
+.trbz-hero-inner { position: relative; z-index: 1; padding: 52px var(--page-margin) 48px; max-width: 760px; }
+.trbz-breadcrumb { font-size: 12px; color: rgba(255,255,255,.6); letter-spacing: .04em; margin-bottom: 18px; }
+.trbz-breadcrumb a { color: rgba(255,255,255,.6); text-decoration: none; }
+.trbz-breadcrumb a:hover { color: #fff; }
+.trbz-breadcrumb span { margin: 0 6px; }
+.trbz-hero-label { display: inline-flex; align-items: center; gap: 8px; background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.2); border-radius: 50px; padding: 5px 14px; font-size: 11px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: rgba(255,255,255,.85); margin-bottom: 18px; }
+.trbz-hero h1 { font-family: 'Playfair Display', serif; font-size: clamp(2rem, 4vw, 3rem); font-weight: 400; color: #fff; line-height: 1.15; margin-bottom: 14px; }
+.trbz-hero-sub { font-family: 'DM Sans', sans-serif; font-style: italic; font-size: 1rem; color: rgba(255,255,255,.75); margin-bottom: 28px; line-height: 1.6; max-width: 560px; }
+.trbz-hero-meta { display: flex; align-items: center; gap: 20px; flex-wrap: wrap; }
+.trbz-hero-count { font-size: 13px; color: rgba(255,255,255,.65); }
+.trbz-hero-loc { display: inline-flex; align-items: center; gap: 6px; background: rgba(255,255,255,.1); border-radius: 50px; padding: 5px 14px; font-size: 12px; color: rgba(255,255,255,.8); }
+
+/* ─── Sticky bar ─────────────────────────────────────────────────────────── */
+.trbz-sticky-bar { position: sticky; top: var(--header-group-height, 64px); transition: top var(--animation-speed-slow, .3s) var(--ease-out-cubic, ease); z-index: 7; background: var(--bz-blue-light); box-shadow: 0 2px 12px rgba(0,0,0,.07); }
+
+/* ─── USP bar ────────────────────────────────────────────────────────────── */
+.trbz-usp-bar { background: var(--bz-blue-light); border-bottom: 1px solid rgba(44,95,138,.15); position: sticky; top: var(--header-group-height, 64px); transition: top var(--animation-speed-slow, .3s) var(--ease-out-cubic, ease); z-index: 7; box-shadow: 0 -4px 0 4px var(--bz-blue-light); }
+.trbz-usp-inner { display: flex; align-items: stretch; justify-content: center; flex-wrap: wrap; gap: 0; }
+.trbz-usp-item { display: flex; align-items: center; gap: 12px; padding: 18px 32px; border-right: 1px solid rgba(44,95,138,.15); flex: 1; min-width: 200px; }
+.trbz-usp-item:last-child { border-right: none; }
+.trbz-usp-icon { font-size: 1.4rem; flex-shrink: 0; }
+.trbz-usp-label { font-size: 13px; font-weight: 600; color: var(--bz-blue-dark); }
+.trbz-usp-sub { font-size: 12px; color: var(--bz-blue); }
+@media (max-width: 700px) { .trbz-usp-item { border-right: none; border-bottom: 1px solid rgba(44,95,138,.15); padding: 14px 20px; } .trbz-usp-item:last-child { border-bottom: none; } }
+
+/* ─── Category quick-nav ─────────────────────────────────────────────────── */
+.trbz-cat-nav { padding: 20px var(--page-margin) 0; overflow-x: auto; display: flex; gap: 8px; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+.trbz-cat-nav::-webkit-scrollbar { display: none; }
+.trbz-cat-pill { display: inline-flex; align-items: center; white-space: nowrap; border: 1.5px solid var(--cream-dark); border-radius: 50px; padding: 7px 18px; font-size: 12.5px; font-weight: 500; color: var(--brown-dark); background: var(--white); text-decoration: none; transition: border-color .2s, background .2s, color .2s; flex-shrink: 0; }
+.trbz-cat-pill:hover, .trbz-cat-pill.active { border-color: var(--bz-blue); background: var(--bz-blue); color: #fff; }
+
+/* ─── Filter toolbar (hergebruikt van bestaand patroon) ─────────────────── */
+.trbz-filter-toolbar { display: flex; flex-direction: row; justify-content: space-between; align-items: center; padding: 12px var(--page-margin); border-bottom: 1px solid rgba(44,95,138,.15); margin-bottom: 0; flex-wrap: wrap; gap: 10px; background: transparent; }
+.trbz-filter-groups { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+.trbz-filter-pill-wrap { position: relative; }
+.trbz-filter-pill { border: 1.5px solid var(--cream-dark); border-radius: 50px; padding: 8px 16px; font-size: 13px; background: var(--white); cursor: pointer; display: flex; gap: 6px; align-items: center; font-family: 'DM Sans', sans-serif; color: var(--brown-dark); }
+.trbz-filter-pill.active { border-color: var(--brown-dark); background: var(--brown-dark); color: var(--white); }
+.trbz-filter-pill svg { transition: transform .2s; }
+.trbz-filter-pill[aria-expanded="true"] svg { transform: rotate(180deg); }
+.trbz-filter-dropdown { display: none; position: absolute; background: var(--white); border: 1px solid var(--cream-dark); border-radius: 14px; padding: 16px; min-width: 200px; z-index: 20; box-shadow: 0 8px 24px rgba(0,0,0,.1); top: calc(100% + 8px); left: 0; max-height: 280px; overflow-y: auto; }
+.trbz-filter-dropdown.open { display: block; }
+.trbz-filter-option { display: flex; gap: 8px; align-items: center; font-size: 13px; padding: 6px 0; cursor: pointer; font-family: 'DM Sans', sans-serif; color: var(--brown-dark); }
+.trbz-filter-option input { cursor: pointer; accent-color: var(--bz-blue); }
+.trbz-active-strip { display: flex; flex-wrap: wrap; gap: 8px; padding: 8px var(--page-margin) 10px; background: transparent; }
+.trbz-filter-chip { background: var(--bz-blue-light); border-radius: 50px; padding: 4px 12px; font-size: 12px; display: flex; gap: 6px; align-items: center; text-decoration: none; color: var(--bz-blue-dark); font-family: 'DM Sans', sans-serif; }
+.trbz-filter-sort { border: 1.5px solid var(--cream-dark); border-radius: 50px; padding: 8px 16px; font-size: 13px; background: var(--white); cursor: pointer; color: var(--brown-dark); font-family: 'DM Sans', sans-serif; appearance: none; -webkit-appearance: none; }
+.trbz-filter-overlay { display: none; position: fixed; inset: 0; z-index: 10; }
+.trbz-filter-overlay.open { display: block; }
+
+/* ─── Product grid ───────────────────────────────────────────────────────── */
+.trbz-grid-wrap { padding: 28px var(--page-margin) 64px; position: relative; z-index: 0; }
+.trbz-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+.trbz-card { background: var(--white); border-radius: 18px; overflow: hidden; border: 1px solid var(--cream-dark); display: flex; flex-direction: column; text-decoration: none; color: inherit; transition: transform .22s ease, box-shadow .22s ease; animation: trbzFadeUp .45s ease both; }
+.trbz-card:hover { transform: translateY(-5px); box-shadow: 0 16px 40px rgba(26,61,92,.1); }
+@keyframes trbzFadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: none; } }
+.trbz-card:nth-child(1) { animation-delay: .04s; }
+.trbz-card:nth-child(2) { animation-delay: .08s; }
+.trbz-card:nth-child(3) { animation-delay: .12s; }
+.trbz-card:nth-child(4) { animation-delay: .16s; }
+.trbz-card:nth-child(n+5) { animation-delay: .20s; }
+.trbz-card-img { aspect-ratio: 1; overflow: hidden; background: var(--page-bg); position: relative; display: block; }
+.trbz-card-img img { width: 100%; height: 100%; object-fit: contain; padding: 16px; transition: transform .4s ease; display: block; }
+.trbz-card:hover .trbz-card-img img { transform: scale(1.05); }
+
+/* Stock badges */
+.trbz-badge { position: absolute; top: 12px; left: 12px; font-size: 10px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; padding: 4px 10px; border-radius: 50px; }
+.trbz-badge--stock { background: #d5edd5; color: #2e6b2e; }
+.trbz-badge--order { background: var(--bz-blue-light); color: var(--bz-blue-dark); }
+
+.trbz-card-body { padding: 16px 16px 18px; flex: 1; display: flex; flex-direction: column; gap: 4px; }
+.trbz-card-type { font-size: 10px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--bz-blue); }
+.trbz-card-name { font-family: 'DM Sans', sans-serif; font-size: 1rem; font-weight: 600; color: var(--brown-dark); line-height: 1.3; }
+.trbz-card-desc { font-size: 12px; color: var(--text-muted); line-height: 1.55; margin-top: 4px; flex: 1; }
+.trbz-card-footer { display: flex; align-items: flex-end; justify-content: space-between; margin-top: auto; padding-top: 14px; gap: 8px; }
+.trbz-card-price { font-family: 'Playfair Display', serif; font-size: 1.4rem; color: var(--brown-dark); font-weight: 400; }
+.trbz-card-compare { font-size: .8rem; color: var(--text-muted); text-decoration: line-through; margin-left: 4px; }
+
+/* Buttons op kaart */
+.trbz-btn-atc { background: var(--brown-dark); color: var(--white); border: none; border-radius: 50px; padding: 8px 16px; font-family: 'DM Sans', sans-serif; font-size: 11px; font-weight: 500; letter-spacing: .06em; text-transform: uppercase; cursor: pointer; transition: background .2s, transform .15s; white-space: nowrap; text-decoration: none; display: inline-block; }
+.trbz-btn-atc:hover { background: var(--brown); transform: translateY(-1px); }
+.trbz-btn-order { background: var(--bz-blue); color: var(--white); border: none; border-radius: 50px; padding: 8px 16px; font-family: 'DM Sans', sans-serif; font-size: 11px; font-weight: 500; letter-spacing: .06em; text-transform: uppercase; cursor: pointer; transition: background .2s; white-space: nowrap; text-decoration: none; display: inline-block; }
+.trbz-btn-order:hover { background: var(--bz-blue-dark); }
+
+.trbz-empty { text-align: center; padding: 80px var(--page-margin); color: var(--text-muted); }
+
+/* ─── Brand story ────────────────────────────────────────────────────────── */
+.trbz-brand { background: var(--bz-blue-dark); color: #fff; padding: 64px var(--page-margin); }
+.trbz-brand-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center; max-width: 1080px; margin: 0 auto; }
+.trbz-brand-label { font-size: 11px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--bz-blue-mid); margin-bottom: 14px; }
+.trbz-brand h2 { font-family: 'Playfair Display', serif; font-size: clamp(1.6rem, 3vw, 2.2rem); font-weight: 400; color: #fff; line-height: 1.25; margin-bottom: 20px; }
+.trbz-brand-text { font-size: .925rem; color: rgba(255,255,255,.75); line-height: 1.8; }
+.trbz-brand-text p { margin-bottom: 14px; }
+.trbz-brand-text p:last-child { margin-bottom: 0; }
+.trbz-brand-img { border-radius: 20px; overflow: hidden; aspect-ratio: 4/3; background: var(--bz-blue); }
+.trbz-brand-img img { width: 100%; height: 100%; object-fit: cover; }
+.trbz-brand-img-placeholder { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; font-size: 4rem; opacity: .3; }
+@media (max-width: 768px) { .trbz-brand-inner { grid-template-columns: 1fr; gap: 32px; } }
+
+/* ─── Pickup info ────────────────────────────────────────────────────────── */
+.trbz-pickup { background: var(--cream); padding: 56px var(--page-margin); border-top: 1px solid var(--cream-dark); }
+.trbz-pickup-inner { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.trbz-pickup-card { background: var(--white); border-radius: 20px; padding: 28px 32px; border: 1px solid var(--cream-dark); display: flex; flex-direction: column; }
+.trbz-pickup-icon { font-size: 2rem; margin-bottom: 14px; }
+.trbz-pickup-card h3 { font-family: 'Playfair Display', serif; font-size: 1.25rem; font-weight: 400; color: var(--brown-dark); margin-bottom: 14px; }
+.trbz-hours-row { display: flex; justify-content: space-between; align-items: center; padding: 6px 10px; border-radius: 8px; font-size: 13px; }
+.trbz-hours-row:nth-child(odd) { background: var(--cream); }
+.trbz-hours-row .day { font-weight: 600; color: var(--brown-dark); }
+.trbz-hours-row .time { color: var(--text-muted); }
+.trbz-hours-row .time.closed { color: #c0392b; font-style: italic; }
+.trbz-pickup-address { font-size: 13.5px; color: var(--text); line-height: 1.8; }
+.trbz-pickup-address strong { color: var(--brown-dark); display: block; margin-bottom: 4px; font-size: 14px; }
+.trbz-pickup-map-link { display: inline-flex; align-items: center; gap: 6px; margin-top: 14px; font-size: 12px; color: var(--bz-blue); text-decoration: none; border-bottom: 1px solid rgba(44,95,138,.3); padding-bottom: 1px; }
+.trbz-pickup-map-link:hover { color: var(--bz-blue-dark); }
+.trbz-pickup-contact { display: flex; flex-direction: column; gap: 12px; margin-top: 4px; flex: 1; }
+.trbz-pickup-contact-row { display: flex; align-items: flex-start; gap: 12px; font-size: 13.5px; color: var(--text); }
+.trbz-pickup-contact-row svg { flex-shrink: 0; margin-top: 2px; color: var(--bz-blue); }
+.trbz-pickup-contact-row a { color: var(--bz-blue); text-decoration: none; }
+.trbz-pickup-contact-row a:hover { text-decoration: underline; }
+.trbz-pickup-cta { margin-top: auto; padding-top: 20px; }
+.trbz-pickup-cta a { display: block; text-align: center; background: var(--bz-blue); color: var(--white); border-radius: 50px; padding: 12px 20px; font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 500; letter-spacing: .07em; text-transform: uppercase; text-decoration: none; transition: background .2s; }
+.trbz-pickup-cta a:hover { background: var(--bz-blue-dark); }
+@media (max-width: 900px) { .trbz-pickup-inner { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 600px) { .trbz-pickup-inner { grid-template-columns: 1fr; } }
+
+/* ─── SEO text block ─────────────────────────────────────────────────────── */
+.trbz-seo { padding: 48px var(--page-margin) 64px; background: var(--page-bg); border-top: 1px solid var(--cream-dark); }
+.trbz-seo-inner h2, .trbz-seo-inner h3 { font-family: 'Playfair Display', serif; font-weight: 400; color: var(--brown-dark); margin: 28px 0 10px; font-size: 1.3rem; line-height: 1.25; }
+.trbz-seo-inner h2:first-child, .trbz-seo-inner h3:first-child { margin-top: 0; }
+.trbz-seo-inner p { font-size: .9rem; color: var(--text-muted); line-height: 1.85; margin-bottom: 14px; }
+.trbz-seo-inner a { color: var(--bz-blue); text-decoration: underline; text-underline-offset: 2px; }
+.trbz-seo-inner strong, .trbz-seo-inner b { color: var(--brown-dark); font-weight: 600; }
+
+/* ─── Responsive grid ────────────────────────────────────────────────────── */
+@media (max-width: 1100px) { .trbz-grid { grid-template-columns: repeat(3, 1fr); } }
+@media (max-width: 700px) { .trbz-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; } .trbz-grid-wrap { padding: 24px 4vw 48px; } .trbz-hero-inner { padding: 36px 4vw 32px; } .trbz-usp-bar .trbz-usp-inner { flex-direction: column; } .trbz-usp-item { justify-content: center; text-align: center; } .trbz-pickup { padding: 36px 4vw; } .trbz-seo { padding: 36px 4vw 48px; } }
+@media (max-width: 400px) { .trbz-grid { grid-template-columns: 1fr; } }
+@media (prefers-reduced-motion: reduce) { .trbz-wrap *, .trbz-wrap *::before, .trbz-wrap *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; } }
+</style>
+
+{%- comment -%} Collectiebeschrijving splitsen: eerste alinea in header, rest in SEO-blok onderaan {%- endcomment -%}
+{%- if collection.description != blank -%}
+  {%- assign _desc_parts = collection.description | split: '</p>' -%}
+  {%- assign _desc_first = _desc_parts[0] | append: '</p>' -%}
+  {%- assign _desc_rest = '' -%}
+  {%- for _p in _desc_parts offset: 1 -%}
+    {%- if _p != '' -%}{%- assign _desc_rest = _desc_rest | append: _p | append: '</p>' -%}{%- endif -%}
+  {%- endfor -%}
+{%- endif -%}
+
+<div class="trbz-wrap" itemscope itemtype="https://schema.org/CollectionPage">
+  <meta itemprop="name" content="{{ collection.title }} – Tante Rie, Borne (Twente)">
+  <meta itemprop="description" content="Bunzlau Castle aardewerk te koop bij Tante Rie in Borne, Twente. Heel de collectie op bestelling beschikbaar. Afhalen in Borne, bereikbaar vanuit Enschede, Hengelo en Almelo.">
+
+  <!-- ── Hero ─────────────────────────────────────────────────────────── -->
+  <section class="trbz-hero" aria-label="{{ collection.title }} collectie">
+    <div class="trbz-hero-bg"></div>
+    <div class="trbz-hero-pattern"></div>
+    {%- if collection.image -%}
+      <div class="trbz-hero-img">
+        <img src="{{ collection.image | image_url: width: 1600 }}" alt="{{ collection.image.alt | default: collection.title | escape }}" loading="eager" width="1600" height="600">
+      </div>
+    {%- endif -%}
+    <div class="trbz-hero-inner">
+      <nav class="trbz-breadcrumb" aria-label="Kruimelpad">
+        <a href="/">Home</a><span aria-hidden="true">›</span>
+        <a href="/collections">Collecties</a><span aria-hidden="true">›</span>
+        <span>{{ collection.title }}</span>
+      </nav>
+      <div class="trbz-hero-label" aria-hidden="true">
+        <span>{%- render 'tr-icon', name: 'jar' -%}</span> Authentiek handgemaakt aardewerk
+      </div>
+      <h1 itemprop="headline">{{ collection.title }}</h1>
+      <p class="trbz-hero-sub">
+        {%- if section.settings.subtitle != blank -%}
+          {{ section.settings.subtitle }}
+        {%- else -%}
+          Handgeschilderd in Polen, te bestellen bij Tante Rie in <strong><em style="color:#fff">Borne</em></strong>
+        {%- endif -%}
+      </p>
+      <div class="trbz-hero-meta">
+        <span class="trbz-hero-count">{{ collection.products_count }} producten</span>
+        <span class="trbz-hero-loc"><span aria-hidden="true">{%- render 'tr-icon', name: 'pin' -%}</span> Bakkerssteeg 6, Borne</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Sticky bar (USP + filter) ───────────────────────────────────── -->
+  <div class="trbz-sticky-bar">
+
+  <!-- ── USP bar ───────────────────────────────────────────────────────── -->
+  <div class="trbz-usp-bar" role="complementary" aria-label="Belangrijke informatie">
+    <div class="trbz-usp-inner">
+      <div class="trbz-usp-item">
+        <span class="trbz-usp-icon" aria-hidden="true">{%- render 'tr-icon', name: 'store' -%}</span>
+        <div class="trbz-usp-text">
+          <div class="trbz-usp-label">Alleen afhalen in Borne</div>
+          <div class="trbz-usp-sub">Bakkerssteeg 6, 7622 GX Borne</div>
+        </div>
+      </div>
+      <div class="trbz-usp-item">
+        <span class="trbz-usp-icon" aria-hidden="true">{%- render 'tr-icon', name: 'clock' -%}</span>
+        <div class="trbz-usp-text">
+          <div class="trbz-usp-label">Openingstijden winkel</div>
+          <div class="trbz-usp-sub">Di t/m za&nbsp; 10:00 – 17:00 uur</div>
+        </div>
+      </div>
+      <div class="trbz-usp-item">
+        <span class="trbz-usp-icon" aria-hidden="true">{%- render 'tr-icon', name: 'package' -%}</span>
+        <div class="trbz-usp-text">
+          <div class="trbz-usp-label">Hele collectie op bestelling</div>
+          <div class="trbz-usp-sub">Niet op voorraad? Gewoon bestelbaar</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Categorie quick-nav ───────────────────────────────────────────── -->
+  {%- assign _type_filter = nil -%}
+  {%- for f in collection.filters -%}
+    {%- if f.param_name == 'filter.p.product_type' -%}{%- assign _type_filter = f -%}{%- endif -%}
+  {%- endfor -%}
+  {%- if _type_filter != nil and _type_filter.values.size > 1 -%}
+    <nav class="trbz-cat-nav" aria-label="Productcategorieën">
+      <a href="{{ collection.url }}" class="trbz-cat-pill{% unless request.path contains '?' %} active{% endunless %}">Alle producten</a>
+      {%- for fv in _type_filter.values -%}
+        <a href="{{ fv.url_to_add }}" class="trbz-cat-pill{% if fv.active %} active{% endif %}">{{ fv.label }}</a>
+      {%- endfor -%}
+    </nav>
+  {%- endif -%}
+
+  <!-- ── Filter & sort ─────────────────────────────────────────────────── -->
+  <div id="trbz-filter-overlay" class="trbz-filter-overlay"></div>
+  <form id="trbz-filter-form" action="{{ collection.url }}" method="get">
+    <input type="hidden" name="sort_by" value="{{ collection.sort_by | default: collection.default_sort_by }}">
+    <div class="trbz-filter-toolbar">
+      <div class="trbz-filter-groups">
+        {%- for filter in collection.filters -%}
+          {%- assign _flabel = filter.label | downcase -%}
+          {%- if _flabel == 'decor' or filter.param_name == 'filter.p.product_type' -%}{%- continue -%}{%- endif -%}
+          {%- assign _has_active = false -%}
+          {%- for fv in filter.values -%}{%- if fv.active -%}{%- assign _has_active = true -%}{%- endif -%}{%- endfor -%}
+          <div class="trbz-filter-pill-wrap">
+            <button type="button" class="trbz-filter-pill{% if _has_active %} active{% endif %}" aria-expanded="false" data-trbz-pill>
+              {{ filter.label }}
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <div class="trbz-filter-dropdown" data-trbz-dropdown>
+              {%- for fv in filter.values -%}
+                <label class="trbz-filter-option">
+                  <input type="checkbox" name="{{ filter.param_name }}" value="{{ fv.value }}"{% if fv.active %} checked{% endif %}>
+                  {{ fv.label }}
+                </label>
+              {%- endfor -%}
+            </div>
+          </div>
+        {%- endfor -%}
+      </div>
+      <select class="trbz-filter-sort" name="sort_by" aria-label="Sorteren" data-trbz-sort>
+        {%- assign _cur_sort = collection.sort_by | default: collection.default_sort_by -%}
+        <option value="created-descending"{% if _cur_sort == 'created-descending' %} selected{% endif %}>Nieuwste eerst</option>
+        <option value="price-ascending"{% if _cur_sort == 'price-ascending' %} selected{% endif %}>Prijs: laag → hoog</option>
+        <option value="price-descending"{% if _cur_sort == 'price-descending' %} selected{% endif %}>Prijs: hoog → laag</option>
+        <option value="title-ascending"{% if _cur_sort == 'title-ascending' %} selected{% endif %}>Naam: A → Z</option>
+        <option value="title-descending"{% if _cur_sort == 'title-descending' %} selected{% endif %}>Naam: Z → A</option>
+      </select>
+    </div>
+    {%- assign _any_active = false -%}
+    {%- for f in collection.filters -%}{%- for fv in f.values -%}{%- if fv.active -%}{%- assign _any_active = true -%}{%- endif -%}{%- endfor -%}{%- endfor -%}
+    {%- if _any_active -%}
+      <div class="trbz-active-strip">
+        {%- for f in collection.filters -%}
+          {%- for fv in f.values -%}
+            {%- if fv.active -%}
+              <a href="{{ fv.url_to_remove }}" class="trbz-filter-chip">{{ fv.label }} <span aria-hidden="true">×</span></a>
+            {%- endif -%}
+          {%- endfor -%}
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+  </form>
+
+  </div><!-- /trbz-sticky-bar -->
+
+  <!-- ── Product grid ──────────────────────────────────────────────────── -->
+  {%- comment -%} Detecteer actieve filters {%- endcomment -%}
+  {%- assign _active_decors = '' -%}
+  {%- assign _filter_voorraad = false -%}
+  {%- for f in collection.filters -%}
+    {%- if f.param_name contains 'option' -%}
+      {%- for fv in f.values -%}
+        {%- if fv.active -%}
+          {%- if _active_decors == '' -%}
+            {%- assign _active_decors = fv.value -%}
+          {%- else -%}
+            {%- assign _active_decors = _active_decors | append: '|' | append: fv.value -%}
+          {%- endif -%}
+        {%- endif -%}
+      {%- endfor -%}
+    {%- elsif f.param_name == 'filter.v.availability' -%}
+      {%- for fv in f.values -%}
+        {%- if fv.active and fv.value == '1' -%}{%- assign _filter_voorraad = true -%}{%- endif -%}
+      {%- endfor -%}
+    {%- endif -%}
+  {%- endfor -%}
+  {%- assign _active_decors_arr = _active_decors | split: '|' -%}
+
+  <div class="trbz-grid-wrap">
+    {%- comment -%} SEO-audit 2026-09-25: paginate, anders rendert Shopify max. 50 producten {%- endcomment -%}
+    {%- paginate collection.products by 48 -%}
+    {%- if collection.products.size > 0 -%}
+      <div class="trbz-grid" role="list" aria-label="Bunzlau Castle producten">
+        {%- for product in collection.products -%}
+          {%- assign _available = product.available -%}
+          {%- assign _kaart_tekst = product.metafields.custom.samenvatting -%}
+
+          {%- comment -%} Zoek variant voor kaartafbeelding op basis van actieve filters {%- endcomment -%}
+          {%- assign _card_img = product.featured_image -%}
+          {%- assign _card_variant_url = product.url -%}
+          {%- if _active_decors != '' -%}
+            {%- comment -%} Decor-filter: toon matching variant; als ook voorraadfilter actief, kies eerste beschikbare match {%- endcomment -%}
+            {%- for v in product.variants -%}
+              {%- assign _v_matched = false -%}
+              {%- for _dec in _active_decors_arr -%}
+                {%- if v.option1 == _dec or v.option2 == _dec or v.option3 == _dec -%}
+                  {%- assign _v_matched = true -%}
+                {%- endif -%}
+              {%- endfor -%}
+              {%- if _v_matched -%}
+                {%- if _filter_voorraad == false or v.available -%}
+                  {%- if v.featured_image -%}{%- assign _card_img = v.featured_image -%}{%- endif -%}
+                  {%- assign _card_variant_url = product.url | append: '?variant=' | append: v.id -%}
+                  {%- break -%}
+                {%- endif -%}
+              {%- endif -%}
+            {%- endfor -%}
+          {%- elsif _filter_voorraad -%}
+            {%- comment -%} Alleen voorraadfilter: toon eerste beschikbare variant {%- endcomment -%}
+            {%- for v in product.variants -%}
+              {%- if v.available -%}
+                {%- if v.featured_image -%}{%- assign _card_img = v.featured_image -%}{%- endif -%}
+                {%- assign _card_variant_url = product.url | append: '?variant=' | append: v.id -%}
+                {%- break -%}
+              {%- endif -%}
+            {%- endfor -%}
+          {%- endif -%}
+
+          <article class="trbz-card" role="listitem" itemscope itemtype="https://schema.org/Product">
+            <a href="{{ _card_variant_url }}" class="trbz-card-img" aria-label="{{ product.title }}">
+              {%- if _card_img -%}
+                <img
+                  src="{{ _card_img | image_url: width: 500 }}"
+                  alt="{{ _card_img.alt | default: product.title | escape }} – Bunzlau Castle bij Tante Rie Borne"
+                  loading="lazy"
+                  width="500"
+                  height="500"
+                  itemprop="image">
+              {%- else -%}
+                <div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:3rem;opacity:.2" aria-hidden="true">{%- render 'tr-icon', name: 'jar', size: 48 -%}</div>
+              {%- endif -%}
+              {%- if _available -%}
+                <span class="trbz-badge trbz-badge--stock" aria-label="Op voorraad">Op voorraad</span>
+              {%- else -%}
+                <span class="trbz-badge trbz-badge--order" aria-label="Op bestelling beschikbaar">Te bestellen</span>
+              {%- endif -%}
+            </a>
+            <div class="trbz-card-body">
+              {%- if product.type != blank -%}
+                <span class="trbz-card-type" itemprop="category">{{ product.type }}</span>
+              {%- endif -%}
+              <a href="{{ _card_variant_url }}" style="text-decoration:none">
+                <p class="trbz-card-name" itemprop="name">{{ product.title }}</p>
+              </a>
+              {%- if _kaart_tekst != blank -%}
+                <p class="trbz-card-desc">{{ _kaart_tekst }}</p>
+              {%- endif -%}
+              <div class="trbz-card-footer">
+                <span class="trbz-card-price" itemprop="offers" itemscope itemtype="https://schema.org/Offer">
+                  <meta itemprop="priceCurrency" content="EUR">
+                  <meta itemprop="price" content="{{ product.price | divided_by: 100.0 }}">
+                  {%- if product.variants.size > 1 -%}<span style="font-size:.75rem;font-weight:400;color:var(--text-muted);display:block;letter-spacing:.02em">Prijs vanaf</span>{%- endif -%}
+                  {{ product.price | money }}
+                  {%- if product.compare_at_price > product.price -%}
+                    <span class="trbz-card-compare">{{ product.compare_at_price | money }}</span>
+                  {%- endif -%}
+                </span>
+                {%- if _available -%}
+                  <button class="trbz-btn-atc" data-tr-atc data-variant-id="{{ product.selected_or_first_available_variant.id }}" aria-label="Voeg {{ product.title }} toe aan winkelwagen">
+                    In winkelwagen
+                  </button>
+                {%- else -%}
+                  <a href="{{ _card_variant_url }}" class="trbz-btn-order" aria-label="Bestel {{ product.title }}">Bestel nu</a>
+                {%- endif -%}
+              </div>
+            </div>
+          </article>
+        {%- endfor -%}
+      </div>
+    {%- else -%}
+      <div class="trbz-empty" role="status">
+        <p>Geen producten gevonden met deze filters. <a href="{{ collection.url }}" style="color:var(--bz-blue)">Wis filters</a></p>
+      </div>
+    {%- endif -%}
+    {%- render 'tr-pagination', paginate: paginate -%}
+    {%- endpaginate -%}
+  </div>
+
+  <!-- ── Brand story ───────────────────────────────────────────────────── -->
+  <section class="trbz-brand" aria-labelledby="trbz-brand-heading">
+    <div class="trbz-brand-inner">
+      <div>
+        <p class="trbz-brand-label">Over het merk</p>
+        <h2 id="trbz-brand-heading">Bunzlau Castle: meer dan 200 jaar ambacht</h2>
+        <div class="trbz-brand-text">
+          {%- if section.settings.brand_text != blank -%}
+            {{ section.settings.brand_text }}
+          {%- else -%}
+            <p>In het Poolse stadje Bolesławiec schilderen pottenbakkers al meer dan twee eeuwen aardewerk met de hand. Ze gebruiken traditionele stempels en sponsjes om de patronen aan te brengen. Geen twee stukken zijn precies gelijk. Het klassieke blauwe patroon, het pauwenoog, staat al generaties lang symbool voor het merk.</p>
+            <p>Bunzlau Castle aardewerk gaat in de vaatwasser, magnetron én oven. Het glazuur is loodvrij en bestand tegen dagelijks gebruik. Je koopt het niet voor één seizoen.</p>
+            <p>Bij Tante Rie vind je theepotten, mokken, borden, schalen, kommen en decoratiestukken in meerdere decors. Staat een stuk er niet? De hele collectie is op bestelling beschikbaar. Je haalt het op zodra het er ligt.</p>
+            <p>Borne ligt midden in Twente, op een halfuur van <strong>Enschede, Hengelo en Almelo</strong>. Loop binnen, kijk rond en neem het mee.</p>
+          {%- endif -%}
+        </div>
+      </div>
+      <div class="trbz-brand-img">
+        {%- if section.settings.brand_image != blank -%}
+          <img src="{{ section.settings.brand_image | image_url: width: 800 }}" alt="Bunzlau Castle aardewerk bij Tante Rie Borne Twente" loading="lazy" width="800" height="600">
+        {%- else -%}
+          <div class="trbz-brand-img-placeholder" aria-hidden="true">{%- render 'tr-icon', name: 'jar' -%}</div>
+        {%- endif -%}
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Ophaalinformatie ──────────────────────────────────────────────── -->
+  <section class="trbz-pickup" aria-labelledby="trbz-pickup-heading">
+    <h2 id="trbz-pickup-heading" style="font-family:'Playfair Display',serif;font-size:clamp(1.5rem,2.5vw,2rem);font-weight:400;color:var(--brown-dark);margin-bottom:28px;">Alleen afhalen in de winkel</h2>
+    <div class="trbz-pickup-inner">
+      <div class="trbz-pickup-card">
+        <div class="trbz-pickup-icon" aria-hidden="true">{%- render 'tr-icon', name: 'pin' -%}</div>
+        <h3>Winkeladres</h3>
+        <div class="trbz-pickup-address">
+          <strong>Tante Rie</strong>
+          <span>Bakkerssteeg 6</span><br>
+          <span>7622 GX</span> <span>Borne</span><br>
+          <span>Twente</span>
+        </div>
+        <a href="https://maps.google.com/?q=Bakkerssteeg+6+Borne" class="trbz-pickup-map-link" target="_blank" rel="noopener" aria-label="Open in Google Maps">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          Routebeschrijving in Google Maps
+        </a>
+      </div>
+      <div class="trbz-pickup-card">
+        <div class="trbz-pickup-icon" aria-hidden="true">{%- render 'tr-icon', name: 'clock' -%}</div>
+        <h3>Openingstijden</h3>
+        {%- assign days  = 'Maandag,Dinsdag,Woensdag,Donderdag,Vrijdag,Zaterdag,Zondag' | split: ',' -%}
+        {%- assign hours = 'Gesloten,10:00 – 17:00,10:00 – 17:00,10:00 – 17:00,10:00 – 17:00,10:00 – 17:00,Gesloten' | split: ',' -%}
+        {%- for day in days -%}
+          {%- assign _h = hours[forloop.index0] -%}
+          <div class="trbz-hours-row">
+            <span class="day">{{ day }}</span>
+            <span class="time{% if _h == 'Gesloten' %} closed{% endif %}">{{ _h }}</span>
+          </div>
+        {%- endfor -%}
+      </div>
+
+      <div class="trbz-pickup-card">
+        <div class="trbz-pickup-icon" aria-hidden="true">{%- render 'tr-icon', name: 'chat' -%}</div>
+        <h3>Contact &amp; bestellen</h3>
+        <div class="trbz-pickup-contact">
+          <div class="trbz-pickup-contact-row">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.28 2 2 0 0 1 3.59 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.1a16 16 0 0 0 6 6l.92-.92a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.73 16l.19.92z"/></svg>
+            <div><a href="tel:+31638291189">+31 6 38291189</a></div>
+          </div>
+          <div class="trbz-pickup-contact-row">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            <div><a href="mailto:webshop@tanterie.nl">webshop@tanterie.nl</a></div>
+          </div>
+          <div class="trbz-pickup-contact-row">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            <div style="font-size:12.5px;color:var(--text-muted)">Niet op voorraad? Heel de collectie is op bestelling beschikbaar.</div>
+          </div>
+        </div>
+        <div class="trbz-pickup-cta">
+          <a href="/pages/contact">Stuur een bericht</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── SEO tekstblok (resterende beschrijving uit Shopify admin) ─────── -->
+  <div class="trbz-seo">
+    <div class="trbz-seo-inner" style="max-width:760px;margin:0 auto;">
+      {%- if _desc_rest != '' -%}{{ _desc_rest }}{%- elsif section.settings.seo_text != blank -%}{{ section.settings.seo_text }}{%- endif -%}
+        <h2>Bunzlau Castle kopen in Twente</h2>
+        <p>Tante Rie in Borne is officieel reseller van Bunzlau Castle. Je kunt langskomen om de stukken te zien, of online bestellen en ophalen. Stukken die er niet staan, bestellen we voor je. Levertijd hangt af van de collectiecyclus van Bunzlau Castle. Vraag ernaar via <a href="/pages/contact">het contactformulier</a> of bel ons.</p>
+
+        <h3>Welke decors zijn er op voorraad?</h3>
+        <p>Bij Tante Rie hebben we momenteel stukken op voorraad in de decors <strong>Lace, Belle Fleur, Flower Fountain, Harmony, Spring Ballet, Flower Crown, Spring Hill, Felicity, Blue Valentine, Dragonfly, Daydream, Indigo, Winter Garden, Ocean Breeze, Romance, Granada, Blossom Breeze, Porto, Blue Garden</strong> en enkele andere. Niet elk decor is in elk product beschikbaar. Staat jouw favoriete decor er niet bij? De volledige Bunzlau Castle collectie is op bestelling verkrijgbaar.</p>
+
+        <h3>Gebruik en onderhoud</h3>
+        <p>Bunzlau Castle aardewerk is vaatwasserbestendig, magnetronveilig en ovenbestendig tot 220°C. Gebruik geen metalen schuursponsjes op het glazuur. De stukken zijn zwaar en solide. Bij normaal gebruik gaan ze tientallen jaren mee.</p>
+
+        <h3>Theepotten van Bunzlau Castle</h3>
+        <p>De theepotten van Bunzlau Castle zijn gemaakt voor dagelijks gebruik. Het dikke aardewerk houdt warmte goed vast. Bij Tante Rie combineren we ze graag met <a href="/collections/losse-thee">losse thee</a> en <a href="/collections/theefilters-en-maatschepjes">theefilters</a> voor een compleet theemoment.</p>
+
+        <h3>Ophalen in Borne</h3>
+        <p>Bunzlau Castle is zwaar en breekbaar. Ophalen in de winkel heeft de voorkeur. Je vindt ons aan de Bakkerssteeg 6 in Borne, dinsdag tot en met zaterdag open van 10:00 tot 17:00. Gratis parkeren in de buurt van de winkel.</p>
+    </div>
+  </div>
+
+  <!-- ── JSON-LD CollectionPage ──────────────────────────────────────── -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "@id": {{ shop.url | append: collection.url | json }},
+    "name": {{ collection.title | json }},
+    "description": {{ collection.description | strip_html | truncate: 200 | json }},
+    "url": {{ shop.url | append: collection.url | json }},
+    "isPartOf": {
+      "@type": "WebSite",
+      "name": "Tante Rie",
+      "url": "https://tanterie.nl"
+    },
+    "numberOfItems": {{ collection.products_count }}
+  }
+  </script>
+
+</div>
+
+<script>
+(function () {
+  var usp, bar, rafId;
+
+  function updateFilterTop() {
+    usp = usp || document.querySelector('.trbz-usp-bar');
+    bar = bar || document.querySelector('.trbz-filter-toolbar');
+    if (!usp || !bar) return;
+    var bottom = usp.getBoundingClientRect().bottom;
+    // Alleen updaten als USP sticky is (boven in viewport)
+    if (bottom > 0 && bottom < window.innerHeight * 0.5) {
+      bar.style.top = bottom + 'px';
+    }
+  }
+
+  function onScroll() {
+    if (rafId) return;
+    rafId = requestAnimationFrame(function () { rafId = null; updateFilterTop(); });
+  }
+
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', updateFilterTop);
+  window.addEventListener('load', updateFilterTop);
+  updateFilterTop();
+})();
+</script>
+
+<script>
+(function () {
+  var form   = document.getElementById('trbz-filter-form');
+  var overlay = document.getElementById('trbz-filter-overlay');
+  if (!form) return;
+
+  var pills     = form.querySelectorAll('[data-trbz-pill]');
+  var dropdowns = form.querySelectorAll('[data-trbz-dropdown]');
+
+  function closeAll() {
+    pills.forEach(function (p) { p.setAttribute('aria-expanded', 'false'); });
+    dropdowns.forEach(function (d) { d.classList.remove('open'); });
+    if (overlay) overlay.classList.remove('open');
+  }
+
+  pills.forEach(function (pill, i) {
+    pill.addEventListener('click', function () {
+      var isOpen = pill.getAttribute('aria-expanded') === 'true';
+      closeAll();
+      if (!isOpen) {
+        pill.setAttribute('aria-expanded', 'true');
+        dropdowns[i].classList.add('open');
+        if (overlay) overlay.classList.add('open');
+      }
+    });
+  });
+
+  if (overlay) overlay.addEventListener('click', closeAll);
+
+  form.querySelectorAll('input[type="checkbox"]').forEach(function (cb) {
+    cb.addEventListener('change', function () { form.submit(); });
+  });
+
+  var sortSel = form.querySelector('[data-trbz-sort]');
+  if (sortSel) {
+    sortSel.addEventListener('change', function () {
+      var hidden = form.querySelector('input[name="sort_by"]');
+      if (hidden) hidden.remove();
+      form.submit();
+    });
+  }
+})();
+</script>
+
+{% schema %}
+{
+  "name": "Bunzlau Collectie",
+  "tag": "div",
+  "settings": [
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Hero ondertitel",
+      "placeholder": "Laat leeg voor standaard tekst"
+    },
+    {
+      "type": "image_picker",
+      "id": "brand_image",
+      "label": "Brand story afbeelding"
+    },
+    {
+      "type": "richtext",
+      "id": "brand_text",
+      "label": "Brand story tekst",
+      "info": "Laat leeg voor standaard tekst over Bunzlau Castle"
+    },
+    {
+      "type": "richtext",
+      "id": "seo_text",
+      "label": "SEO tekst (alternatief voor beschrijving)",
+      "info": "Wordt getoond als de collectiebeschrijving geen tweede alinea heeft"
+    }
+  ]
+}
+{% endschema %}
