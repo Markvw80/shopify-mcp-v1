@@ -13,6 +13,9 @@
 | Collecties | Alt-tekst toegevoegd aan de hero-afbeelding van `thee`, `zwarte-thee`, `kruidenthee`, `rooibos`, `witte-thee`, `thee-bewaarblikken`, `theefilters-en-maatschepjes` (dezelfde afbeelding, geen nieuwe upload) |
 | Pagina's | Meta-titel + meta-description ingevuld voor `cold-brew-thee`, `theewinkel-borne-twente`, `over-ons`, `veelgestelde-vragen`, `contact`, `verzendbeleid`, `retourbeleid-tante-rie`, `algemene-voorwaarden`, `privacy-policy` |
 
+### Product-SEO (26-09)
+SEO-titel en meta-description ingevuld voor **49 producten**: theeblikken van Sara Miller en Sanderson, Bunzlau Castle (keramiek, melamine, glas en theemutsen), Blond Amsterdam, Natural Flower Cards, Pineut, Arelo en Rice. De teksten zijn geschreven in de toon van Tante Rie: geen em-dashes, geen uitroeptekens en geen marketingclichés. Alle titels zijn ≤ 60 tekens, alle descriptions 110 tot 160 tekens. Bij keramiek van Bunzlau en Blond staat "af te halen in Borne". Het volledige overzicht staat in `product-seo-teksten.csv`.
+
 ## 🧪 Klaar in de theme-kopie "SEO-audit-fixes 2026-09-25" (nog NIET live)
 
 Theme-ID `202361864456`, een kopie van het live theme van 25-09. Publiceren moet vanuit Shopify-admin (Online Store → Themes); de API-tool mag dat niet.
@@ -40,7 +43,6 @@ Nog niet gedaan: de overige `tr-collection-*`-secties (groene thee 42, zwarte th
 ## ⛔ Niet uitgevoerd (geblokkeerd of jouw beslissing)
 
 - **Collectie `frontpage` depubliceren**: de tool blokkeert unpublish-acties. Doe dit in de admin: Collecties → frontpage → Verkoopkanalen → Webshop uit.
-- **SEO-titels en meta-descriptions voor ~52 producten**: bulkwijziging op live producten, geweigerd door de sessiepermissies.
 - **34 lege of kassa-achtige producten online** (bijv. `blikje-bij`, `thee-ei-kat`, `chocoladebal`, Sint/Halloween-items, "Tante Rie Cadeaubon" met beschrijving "x§x"): moeten die online staan?
 - **Kale gepubliceerde collecties** `kaartjes`, `glazen`, `return-to-sender` (bevat producten van €0,00), `dutch-tea-maestro`, `koffiekaravaan`, `tegels-anita`, `nfc-natural-flower-cards`: online houden (dan SEO-tekst schrijven) of depubliceren?
 - **`webshop.tanterie.nl`**: controleren in Instellingen → Domeinen (redirect naar het primaire domein).
